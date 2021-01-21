@@ -1,102 +1,62 @@
 
 <?php /* Template Name: Home */ ?>
 <?php get_header() ?>
-<?php
-    $section_1_group = get_field('section_1_group');
-    $form_group = $section_1_group['form_group'];
-    $section_2_group = get_field('section_2_group');
-    $section_3_group = get_field('section_3_group');
-    $section_4_group = get_field('section_4_group');
-?>
-<section class="sec-1">
-    <div class="container">
-        <?php if(!empty($section_1_group['info'])) { ?>
-            <div class="info-wrap">
-                <?php echo $section_1_group['info'];
-                if(!empty($section_1_group['info'])) { ?>
-                    <div class="btn btn-main">
-                        <a href="#"><?php echo $section_1_group['button_label']?></a>
-                    </div>
-                <?php } ?>
-            </div>
-        <?php } ?>
-        <div class="form-wrap">
-            <div class="form-info">
-                <?php if(!empty($form_group['title'])) { ?>
-                    <h2><?php echo $form_group['title']?></h2>
-                <?php } ?>
-                <?php if(!empty($form_group['subtitle'])) {
-                     echo $form_group['subtitle'];
-                } ?>
 
-                <?php
-				if( have_rows('selectors') ): ?>
-					<form action="">
-                        <div class="selectors">
-                            <?php
-                            $i=1;
-                            while( have_rows('selectors') ): the_row(); ?>
-                                <div class="select">
-                                    <select name="val-<?php echo get_row_index(); ?>" id="val-<?php echo get_row_index(); ?>">
-                                        <?php
-                                        if( have_rows('select') ): ?>
-                                            <?php
-                                            while( have_rows('select') ): the_row();
-                                                ?>
-                                                    <option value="<?php the_sub_field('option'); ?>"><?php the_sub_field('option'); ?></option>
-                                            <?php endwhile; ?>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
-                            <?php endwhile;?>
-					    </div>
-                        <?php if(!empty($form_group['price'])) {
-                            $number = $form_group['price'];
-                            ?>
-                            <div class="price">
-                                <i class="fas fa-dollar-sign"></i>
-                                <?php echo number_format($number, 2, '.', ' ') ?>
-                            </div>
-                        <?php
-                        } ?>
-                        <?php if(!empty($form_group['form_button_label'])) {
-                            ?>
-                            <div class="btn btn-main">
-                                <a href="#">
-                                    <?php echo $form_group['form_button_label'] ?>
-                                </a>
-                            </div>
-                            <?php
-                        } ?>
-					</form>
-				<?php endif;  ?>
 
-            </div>
-        </div>
-    </div>
-</section>
-<section class="sec-2">
+<section class="main-section" style="background-image: url('<?php echo get_field("background_image")?>') ">
+    <div class="blur-overlay"></div>
     <div class="container">
-        <div class="preloader">
-            <img src="https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif" alt="">
+        <div class="info-wrap">
+            <?php
+            $h1_title = get_field('h1_title');
+            if(!empty($h1_title)) {?>
+                <h1><?php echo $h1_title ?></h1>
+            <?php } ?>
+            <?php
+            $h3_title = get_field('h3_title');
+            if(!empty($h3_title)) {?>
+                <h3><?php echo $h3_title ?></h3>
+            <?php } ?>
+            <?php
+            $button = get_field('button');
+            $link_to_original_picture = $button['link_to_original_picture'];
+            $button_label = $button['button_label'];
+            if(!empty($link_to_original_picture)) {?>
+                <div class="btn">
+                    <a href="<?php echo $link_to_original_picture?>">
+                        <?php echo $button_label?>
+                    </a>
+                </div>
+            <?php } ?>
+            <?php if( have_rows('slider_info') ): ?>
+                <div class="slider-controls">
+                    <i class="am-prev fas fa-long-arrow-alt-left"></i>
+                    <i class="am-next fas fa-long-arrow-alt-right"></i>
+                </div>
+                <div class="slider-info">
+                    <?php while( have_rows('slider_info') ): the_row();
+                        $content = get_sub_field('content');
+                        $link = get_sub_field('link');
+                        if(!empty($content)) {
+                        ?>
+                        <div class="slide">
+                            <div class="content">
+                                <?php echo $content?>
+                            </div>
+                            <a href="<?php echo $link?>" class="more">
+                                <?php echo get_field('more_label','option')?>
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </a>
+                        </div>
+                    <?php
+                        }
+                     endwhile; ?>
+                </div>
+
+            <?php endif; ?>
         </div>
     </div>
 </section>
-<?php if(!empty( $section_3_group['content'])) { ?>
-<section class="sec-3">
-    <div class="container">
-        <div class="content">
-            <?php echo $section_3_group['content'] ?>
-        </div>
-    </div>
-</section>
-<?php } ?>
-<?php if(!empty( $section_4_group['shortcode'])) { ?>
-    <section class="sec-4">
-        <div class="container">
-            <?php echo $section_4_group['shortcode'] ?>
-        </div>
-    </section>
-<?php } ?>
+
 
 <?php get_footer() ?>

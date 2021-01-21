@@ -21,17 +21,3 @@
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <?php the_custom_logo() ?>
-            </div>
-            <?php
-            wp_nav_menu(
-            );
-            ?>
-            <div class="btn btn-head">
-                <a href="#">Leave a request</a>
-            </div>
-        </div>
-	</header>
